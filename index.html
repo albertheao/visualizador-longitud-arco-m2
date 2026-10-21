@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Visualizador de longitud de arco</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root{--navy:#12324a;--blue:#0057b8;--cyan:#0b6380;--gold:#d6a52a;--orange:#d96d16;--ink:#243746;--muted:#526b7d;--border:#d7e3e8;--soft:#eef5f7;--white:#fff}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eef5f7,#f8fbfc);font-family:Inter,Arial,sans-serif;color:var(--ink)}.container{width:min(1180px,calc(100% - 28px));margin:auto;padding:28px 0}.header{border-top:7px solid var(--navy);padding:18px 0 20px}.kicker{margin:0;color:var(--cyan);font-size:.78rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.header h1{margin:.35rem 0 .45rem;padding-left:14px;border-left:5px solid var(--gold);color:var(--navy);font-size:clamp(1.7rem,3vw,2.35rem)}.lead{max-width:900px;margin:0;color:var(--muted);line-height:1.55}.card{background:var(--white);border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 32px rgba(18,50,74,.08)}.controls{display:grid;grid-template-columns:1.15fr 1fr;gap:20px;padding:20px;margin-bottom:18px}.control-label{display:block;margin-bottom:.55rem;color:var(--navy);font-weight:800}.cases{display:grid;grid-template-columns:1fr 1fr;gap:10px}.case{position:relative}.case input{position:absolute;opacity:0}.case label{display:block;height:100%;padding:.8rem .9rem;border:2px solid var(--border);border-radius:11px;background:#fff;cursor:pointer}.case label strong{display:block;color:var(--navy)}.case label span{display:block;margin-top:.25rem;color:var(--muted);font-size:.8rem;line-height:1.35}.case input:checked+label{border-color:var(--cyan);background:#edf7fa;box-shadow:0 0 0 3px rgba(11,99,128,.12)}.range-row{display:grid;grid-template-columns:1fr 82px;gap:12px;align-items:center}input[type=range]{width:100%;accent-color:var(--gold)}.number-input{width:100%;min-height:44px;border:2px solid var(--gold);border-radius:10px;color:var(--navy);font:850 1.12rem Inter,Arial,sans-serif;text-align:center;background:#fffaf0}.number-input:focus{outline:3px solid rgba(214,165,42,.3);outline-offset:2px}.main-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(290px,.75fr);gap:18px}.plot-card{padding:14px}.plot{height:560px}.side{display:grid;gap:18px;align-content:start}.explanation,.results{padding:20px}.explanation h2,.results h2{margin:0 0 .7rem;color:var(--navy);font-size:1.12rem}.explanation p{margin:.45rem 0;color:var(--muted);line-height:1.5}.formula{margin:.8rem 0;padding:.8rem;border-left:4px solid var(--gold);background:#fffaf0;color:var(--navy);text-align:center}.metric{display:flex;justify-content:space-between;gap:16px;padding:.72rem 0;border-bottom:1px solid #e6eef1}.metric:last-child{border:0}.metric span{color:var(--muted)}.metric strong{color:var(--navy);text-align:right}.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin:.2rem 0 .5rem;color:var(--muted);font-size:.82rem}.legend span{display:inline-flex;gap:.42rem;align-items:center}.dot{width:13px;height:4px;border-radius:4px}.footer{margin-top:24px;padding:18px;text-align:center;color:var(--muted);font-size:.84rem;border-top:1px solid var(--border)}.footer strong{color:var(--navy)}@media(max-width:850px){.controls,.main-grid{grid-template-columns:1fr}.plot{height:460px}}@media(max-width:560px){.container{width:min(100% - 16px,1180px);padding-top:12px}.controls{padding:14px}.cases{grid-template-columns:1fr}.plot{height:390px}.header h1{font-size:1.55rem}}
+.formula{overflow-x:auto}.formula mjx-container[display="true"]{margin:.55rem 0!important}.plot-stage{position:relative}.plot-background{position:absolute;z-index:0;left:66px;right:24px;top:20px;bottom:58px;width:calc(100% - 90px);height:calc(100% - 78px);object-fit:fill;opacity:.72;pointer-events:none}.plot-stage .plot{position:relative;z-index:1}
+</style>
+</head>
+<body>
+<main class="container">
+<header class="header">
+<p class="kicker">Universidad Galileo · Departamento de Matemática Aplicada</p>
+<h1>Longitud de arco</h1>
+<p class="lead">Una curva suave puede aproximarse mediante segmentos rectilíneos. Al aumentar el número de subintervalos, la longitud \(L_n\) del polígono inscrito se aproxima a la longitud de arco \(L\).</p>
+</header>
+
+<section class="controls card" aria-label="Controles del visualizador">
+<div>
+<span class="control-label">Casos de Estudio</span>
+<div class="cases">
+<div class="case"><input type="radio" id="case-catenary" name="case" value="catenary" checked><label for="case-catenary"><strong>Catenaria</strong><span>\(y=150\cosh\!\left(\frac{x}{150}\right)\), entre las torres.</span></label></div>
+<div class="case"><input type="radio" id="case-circle" name="case" value="circle"><label for="case-circle"><strong>Circunferencia</strong><span>Polígono regular inscrito en un círculo de radio \(r=1\).</span></label></div>
+</div>
+</div>
+<div>
+<label class="control-label" for="partition">Número de segmentos \(n\)</label>
+<div class="range-row"><input id="partition" type="range" min="1" max="80" value="1" step="1"><input id="partition-value" class="number-input" type="number" min="1" max="80" value="1" step="1" inputmode="numeric" aria-label="Ingresar número de segmentos"></div>
+</div>
+</section>
+
+<section class="main-grid">
+<article class="plot-card card">
+<div class="legend"><span><i class="dot" style="background:#0057b8"></i>Curva</span><span><i class="dot" style="background:#d96d16"></i>Polígono inscrito</span><span><i class="dot" style="height:8px;background:#d6a52a"></i>Puntos de la partición</span></div>
+<div class="plot-stage"><img id="catenary-background" class="plot-background" src="assets/catenaria-fondo.svg" alt="Paisaje con dos torres alineadas con la catenaria"><div id="plot" class="plot" aria-label="Curva y polígono inscrito"></div></div>
+</article>
+<aside class="side">
+<section class="explanation card"><h2 id="case-title">Cable en forma de catenaria</h2><div id="case-description"></div><div id="case-formula" class="formula"><div id="formula-catenary">\[\begin{gathered}y=150\cosh\!\left(\frac{x}{150}\right)\\[4pt]L=\int_{-100}^{100}\sqrt{1+[f'(x)]^2}\,dx\end{gathered}\]</div><div id="formula-circle" hidden>\[L_n=2nr\sin\!\left(\frac{\pi}{n}\right),\qquad L=2\pi r,\qquad r=1\]</div></div></section>
+<section class="results card"><h2>Comparación de longitudes</h2><div class="metric"><span>Polígono inscrito \(L_n\)</span><strong id="polygon-length">—</strong></div><div class="metric"><span>Longitud de arco \(L\)</span><strong id="arc-length">—</strong></div><div class="metric"><span>Error relativo porcentual</span><strong id="relative-error">—</strong></div></section>
+</aside>
+</section>
+
+<footer class="footer"><strong>Departamento de Matemática Aplicada</strong> · Universidad Galileo<br>Applet educativo desarrollado con apoyo de IA · <a href="mailto:alberth@galileo.edu">alberth@galileo.edu</a></footer>
+</main>
+<script>
+const plot=document.getElementById('plot'),slider=document.getElementById('partition'),nValue=document.getElementById('partition-value');
+const catenaryBackground=document.getElementById('catenary-background');
+const title=document.getElementById('case-title'),description=document.getElementById('case-description'),formula=document.getElementById('case-formula');
+const formulaCatenary=document.getElementById('formula-catenary'),formulaCircle=document.getElementById('formula-circle');
+const polygonLength=document.getElementById('polygon-length'),arcLength=document.getElementById('arc-length'),relativeError=document.getElementById('relative-error');
+const BLUE='#0057b8',ORANGE='#d96d16',GOLD='#d6a52a',GRID='#dce7eb',AXIS='#111827';
+let typesetVersion=0;
+let typesetQueue=Promise.resolve();
+const linspace=(a,b,count)=>Array.from({length:count},(_,i)=>a+(b-a)*i/(count-1));
+const distance=(x1,y1,x2,y2)=>Math.hypot(x2-x1,y2-y1);
+const fmt=(value,unit='')=>`${value.toLocaleString('es-GT',{minimumFractionDigits:8,maximumFractionDigits:8})}${unit}`;
+function selectedCase(){return document.querySelector('input[name="case"]:checked').value}
+function commonLayout(){return{margin:{l:66,r:24,t:20,b:58},paper_bgcolor:'#fff',plot_bgcolor:'#fbfdfe',showlegend:false,font:{family:'Inter, Arial, sans-serif',color:'#243746'},xaxis:{title:{text:'$x$',font:{size:17}},gridcolor:GRID,zeroline:true,zerolinecolor:AXIS,zerolinewidth:2,linecolor:AXIS,linewidth:2,mirror:false,ticks:'outside'},yaxis:{title:{text:'$y$',font:{size:17}},gridcolor:GRID,zeroline:true,zerolinecolor:AXIS,zerolinewidth:2,linecolor:AXIS,linewidth:2,ticks:'outside'},hovermode:'closest'}}
+function updateCatenary(n){
+ MathJax.typesetClear?.([description]);
+ catenaryBackground.hidden=false;
+ const a=-100,b=100,f=x=>150*Math.cosh(x/150),curveX=linspace(a,b,501),curveY=curveX.map(f),px=linspace(a,b,n+1),py=px.map(f);
+ let Ln=0;for(let i=1;i<px.length;i++)Ln+=distance(px[i-1],py[i-1],px[i],py[i]);
+ const L=300*Math.sinh(2/3),diff=L-Ln;
+ title.textContent='Cable en forma de catenaria';description.innerHTML='<p>Las torres están separadas \\(200\\,\\mathrm{ft}\\). Los puntos de la partición tienen abscisas igualmente espaciadas en \\([-100,100]\\).</p>';
+ formulaCatenary.hidden=false;formulaCircle.hidden=true;
+ const data=[{x:curveX,y:curveY,type:'scatter',mode:'lines',line:{color:BLUE,width:4},hovertemplate:'Curva<br>x=%{x:.2f}<br>y=%{y:.2f}<extra></extra>'},{x:px,y:py,type:'scatter',mode:'lines+markers',line:{color:ORANGE,width:3},marker:{color:GOLD,size:8,line:{color:'#8a6500',width:1}},hovertemplate:'Punto<br>x=%{x:.2f}<br>y=%{y:.2f}<extra></extra>'}];
+ const layout=commonLayout();layout.xaxis.range=[-152.5,154.5];layout.yaxis.range=[12.8,258.2];layout.yaxis.title.text='$y$ (ft)';layout.xaxis.title.text='$x$ (ft)';layout.paper_bgcolor='rgba(0,0,0,0)';layout.plot_bgcolor='rgba(255,255,255,.18)';
+ Plotly.react(plot,data,layout,{responsive:true,displaylogo:false,modeBarButtonsToRemove:['select2d','lasso2d']});showResults(Ln,L,diff,' ft');typeset();
+}
+function updateCircle(n){
+ MathJax.typesetClear?.([description]);
+ catenaryBackground.hidden=true;
+ const r=1,theta=linspace(0,2*Math.PI,601),curveX=theta.map(t=>r*Math.cos(t)),curveY=theta.map(t=>r*Math.sin(t)),vertices=linspace(0,2*Math.PI,n+1),px=vertices.map(t=>r*Math.cos(t)),py=vertices.map(t=>r*Math.sin(t));
+ const Ln=2*n*r*Math.sin(Math.PI/n),L=2*Math.PI*r,diff=L-Ln;
+ title.textContent='Circunferencia y polígonos regulares';description.innerHTML='<p>Cada partición divide el ángulo central en partes iguales. Los vértices determinan un polígono regular inscrito.</p>';
+ formulaCatenary.hidden=true;formulaCircle.hidden=false;
+ const data=[{x:curveX,y:curveY,type:'scatter',mode:'lines',line:{color:BLUE,width:4},hoverinfo:'skip'},{x:px,y:py,type:'scatter',mode:'lines+markers',line:{color:ORANGE,width:3},marker:{color:GOLD,size:8,line:{color:'#8a6500',width:1}},hovertemplate:'Vértice<extra></extra>'}];
+ const layout=commonLayout();layout.xaxis.range=[-1.18,1.18];layout.yaxis.range=[-1.18,1.18];layout.yaxis.scaleanchor='x';layout.yaxis.scaleratio=1;
+ Plotly.react(plot,data,layout,{responsive:true,displaylogo:false,modeBarButtonsToRemove:['select2d','lasso2d']});showResults(Ln,L,diff,'');typeset();
+}
+function showResults(Ln,L,diff,unit){polygonLength.textContent=fmt(Ln,unit);arcLength.textContent=fmt(L,unit);relativeError.textContent=`${(Math.max(0,diff)/L*100).toExponential(8)} %`}
+function typeset(){
+ const version=++typesetVersion;
+ if(!window.MathJax?.startup?.promise)return;
+ typesetQueue=typesetQueue.then(async()=>{
+  try{
+   await MathJax.startup.promise;
+   if(version!==typesetVersion)return;
+   await MathJax.typesetPromise([description]);
+  }catch(error){console.warn('No fue posible actualizar la notación matemática.',error)}
+ });
+}
+function update(){const circle=selectedCase()==='circle',minimum=circle?3:1;slider.min=minimum;nValue.min=minimum;if(Number(slider.value)<minimum)slider.value=minimum;const n=Number(slider.value);nValue.value=n;if(circle)updateCircle(n);else updateCatenary(n)}
+function updateFromNumber(){const minimum=selectedCase()==='circle'?3:1;let value=Math.round(Number(nValue.value));if(!Number.isFinite(value))return;value=Math.min(80,Math.max(minimum,value));nValue.value=value;slider.value=value;update()}
+slider.addEventListener('input',update);nValue.addEventListener('change',updateFromNumber);nValue.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();updateFromNumber();nValue.blur()}});document.querySelectorAll('input[name="case"]').forEach(el=>el.addEventListener('change',update));window.addEventListener('resize',()=>Plotly.Plots.resize(plot));update();window.addEventListener('load',update,{once:true});
+</script>
+</body>
+</html>
