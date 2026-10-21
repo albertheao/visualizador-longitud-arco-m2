@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 668 528" role="img" aria-labelledby="title desc">
+  <title id="title">Cable suspendido entre dos torres</title>
+  <desc id="desc">Paisaje estilizado con dos torres metálicas alineadas con los extremos de una catenaria.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dff3f7"/>
+      <stop offset="0.68" stop-color="#f5fbfc"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfe4d3"/>
+      <stop offset="1" stop-color="#edf4e8"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#274b62"/>
+      <stop offset="0.5" stop-color="#6f8795"/>
+      <stop offset="1" stop-color="#17384e"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#12324a" flood-opacity=".18"/>
+    </filter>
+    <g id="tower">
+      <path d="M0 0 L-34 196 M0 0 L34 196 M-25 196 H25" fill="none" stroke="url(#steel)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M-8 35 H8 M-14 70 H14 M-20 108 H20 M-26 150 H26" fill="none" stroke="#496779" stroke-width="4"/>
+      <path d="M-8 35 L14 70 M8 35 L-14 70 M-14 70 L20 108 M14 70 L-20 108 M-20 108 L26 150 M20 108 L-26 150 M-26 150 L34 196 M26 150 L-34 196" fill="none" stroke="#78909c" stroke-width="2.5"/>
+      <path d="M-17 -4 H17" stroke="#12324a" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="0" cy="0" r="7" fill="#d6a52a" stroke="#76570a" stroke-width="2"/>
+    </g>
+  </defs>
+
+  <rect width="668" height="528" fill="url(#sky)"/>
+  <g fill="#fff" opacity=".72">
+    <ellipse cx="118" cy="76" rx="58" ry="15"/>
+    <ellipse cx="163" cy="72" rx="43" ry="19"/>
+    <ellipse cx="512" cy="98" rx="61" ry="16"/>
+    <ellipse cx="554" cy="92" rx="38" ry="20"/>
+  </g>
+  <path d="M0 311 C73 264 132 278 194 318 C253 276 314 278 373 320 C439 267 513 267 668 318 V420 H0Z" fill="#a9cbd4" opacity=".55"/>
+  <path d="M0 349 C96 312 169 324 243 357 C331 310 414 317 493 357 C555 327 610 328 668 349 V438 H0Z" fill="#9ec5ad" opacity=".72"/>
+  <path d="M0 379 C112 348 210 363 292 389 C397 350 511 352 668 384 V528 H0Z" fill="url(#ground)"/>
+  <path d="M0 409 C113 390 224 404 334 416 C448 401 556 395 668 412" fill="none" stroke="#84ad8e" stroke-width="4" opacity=".55"/>
+  <g opacity=".5" fill="#4f8468">
+    <circle cx="55" cy="356" r="19"/><circle cx="78" cy="350" r="24"/><circle cx="102" cy="360" r="17"/>
+    <circle cx="576" cy="354" r="20"/><circle cx="602" cy="347" r="25"/><circle cx="631" cy="358" r="18"/>
+  </g>
+  <g filter="url(#shadow)">
+    <use href="#tower" transform="translate(97 161)"/>
+    <use href="#tower" transform="translate(567 161)"/>
+  </g>
+  <path d="M59 363 H135 M529 363 H605" stroke="#12324a" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+</svg>
